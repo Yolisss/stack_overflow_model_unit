@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class User {
-    private final Board board;
+    private final Board board; //string quote, qs, answers, users
     private String name;
 
 
@@ -43,7 +43,7 @@ public class User {
         answer.setAccepted(true);
     }
 
-    public boolean upVote(Post post) {
+    public boolean upVote(Post post) { //list of upvoters, list of downvoters, author and text
         if (post.getAuthor().equals(this)) {
             throw new VotingException("You cannot vote for yourself!");
         }
@@ -57,7 +57,7 @@ public class User {
     public int getReputation() {
         int reputation = 0;
         // Up-voted questions get you 5 points, currently down-voting of questions affects nothing.
-        for (Question question : getQuestions()) {
+        for (Question question : getQuestions()) { //author, list of answers, text, listOfUpvoters, list of downvoters
             reputation += (question.getUpVotes() * 5);
         }
         // Up-voted answers get you 10 points, down-voting costs 1 point

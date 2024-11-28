@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Post {
-    private final Set<User> upVoters;
+    private final Set<User> upVoters; //unordered collection of unique objs
     private final Set<User> downVoters;
     private User author;
     private String text;
