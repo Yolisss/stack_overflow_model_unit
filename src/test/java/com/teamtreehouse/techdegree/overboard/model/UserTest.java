@@ -30,6 +30,7 @@ public class UserTest {
     public void questionerReputationIncreasesBy5WhenQuestionUpvoted() {
         // Another user upvotes the question
         User voter = board.createUser("Voter");
+        //question is upvoted by User voter
         voter.upVote(question);
 
         // Verify the questioner's reputation increased by 5 points
@@ -38,6 +39,17 @@ public class UserTest {
         assertEquals(expectedReputation, questioner.getReputation());
     }
 
+    @Test
+    public void answererReputationIncreasesBy10WhenTheirAnswerIsUpvoted() {
+        //answer is upvoted by User voter
+        // Another user upvotes the question
+        User voter = board.createUser("Voter");
+        //answer is upvoted by User voter
+        voter.upVote(answerer);
 
+        // Verify the questioner's reputation increased by 5 points
+        int expectedReputation = 10; // Each upvote gives 5 points
 
+        assertEquals(expectedReputation, questioner.getReputation());
+    }
 }
