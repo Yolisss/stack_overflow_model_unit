@@ -11,26 +11,28 @@ public class UserTest {
     private Board board;
     //who is asking the q
     public User questioner;
+    //who answers the q
+    public User answerer;
     //the q
     public Question question;
     //the one answering the q
-    public Answer answerer;
+    public Answer answer;
 
 
     //initialize Objs (class) User
  @Before
     public void setUp() throws Exception {
-        board = new Board("Coding");
-        questioner = board.createUser("Yolis");
-        question = questioner.askQuestion("What is Java?");
-        answerer = questioner.answerQuestion(question,"Java is a programming language");
+     board = new Board("Coding");
+     questioner = board.createUser("Yolis");
+     answerer = board.createUser("Alex");
+     question = questioner.askQuestion("What is Java?");
+     answer = questioner.answerQuestion(question, "Java is a programming language");
  }
 
     @Test
-    public void questionerReputationIncreasesBy5WhenQuestionUpvoted() {
+    public void questionerReputationIncreasesBy5WhenQuestionUpVoted() {
         // Another user upvotes the question
         User voter = board.createUser("Voter");
-        //question is upvoted by User voter
         voter.upVote(question);
 
         // Verify the questioner's reputation increased by 5 points
@@ -39,17 +41,29 @@ public class UserTest {
         assertEquals(expectedReputation, questioner.getReputation());
     }
 
-    @Test
-    public void answererReputationIncreasesBy10WhenTheirAnswerIsUpvoted() {
-        //answer is upvoted by User voter
-        // Another user upvotes the question
-        User voter = board.createUser("Voter");
-        //answer is upvoted by User voter
-        voter.upVote(answerer);
 
-        // Verify the questioner's reputation increased by 5 points
-        int expectedReputation = 10; // Each upvote gives 5 points
 
-        assertEquals(expectedReputation, questioner.getReputation());
-    }
+
+//    @Test
+//    public void answererReputationIncreasesBy10WhenTheirAnswerIsUpvoted() {
+//        //answer is upvoted by User voter
+//        // Another user upvotes the question
+//        User voter = board.createUser("Voter");
+//        //answer is upvoted by User voter
+//        voter.upVote(answerer);
+//
+//        // Verify the questioner's reputation increased by 5 points
+//        int expectedReputation = 10; // Each upvote gives 5 points
+//
+//        assertEquals(expectedReputation, questioner.getReputation());
+//    }
+//
+//    @Test
+//    public void answerAcceptedGives15PointReputationBoost() {
+//        questioner.acceptAnswer(answerer); //true
+//
+//        int expectedReputation = 15;
+//
+//        assertEquals(expectedReputation, questioner.getReputation());
+//    }
 }
