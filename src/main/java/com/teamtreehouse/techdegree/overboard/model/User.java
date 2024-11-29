@@ -34,7 +34,10 @@ public class User {
     }
 
     public void acceptAnswer(Answer answer) {
+        //question = author of q
         User questioner = answer.getQuestion().getAuthor();
+        //if Alex == to Yolis = false;
+        //then throws err;
         if (!questioner.equals(this)) {
             String message = String.format("Only %s can accept this answer as it is their question",
                     questioner.getName());
@@ -47,6 +50,7 @@ public class User {
         if (post.getAuthor().equals(this)) {
             throw new VotingException("You cannot vote for yourself!");
         }
+        //add user to upVote list
         return post.addUpVoter(this);
     }
 

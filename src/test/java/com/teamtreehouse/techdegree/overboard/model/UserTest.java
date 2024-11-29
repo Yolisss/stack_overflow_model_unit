@@ -1,5 +1,6 @@
 package com.teamtreehouse.techdegree.overboard.model;
 
+import com.teamtreehouse.techdegree.overboard.exc.AnswerAcceptanceException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class UserTest {
      questioner = board.createUser("Yolis");
      answerer = board.createUser("Alex");
      question = questioner.askQuestion("What is Java?");
-     answer = questioner.answerQuestion(question, "Java is a programming language");
+     answer = answerer.answerQuestion(question, "Java is a programming language");
  }
 
     @Test
@@ -41,29 +42,29 @@ public class UserTest {
         assertEquals(expectedReputation, questioner.getReputation());
     }
 
+    @Test
+    public void answerersReputationIncreasesBy10WhenAnswerIsUpVoted() {
+        User voter = board.createUser("Voter");
+     //answer is already answered
+        //someone needs to upvote answer
+        voter.upVote(answer);
+        //vote should increase answer by 10
+        int expectedReputation = 10;
+        //confirm with assert method
+        assertEquals(expectedReputation, answerer.getReputation());
+    }
 
+    @Test
+    public void answerAcceptedGivesAnswer15PointReputation() throws Exception{
+     //we have answer, now we need to verify if it is accepted
+        //call acceptAnswer
+        //yolis.acceptAnswer(Answer = alex.AnswerQ("));
+        //
+        questioner.acceptAnswer(answer);
 
+        int expectedReputation = 15;
 
-//    @Test
-//    public void answererReputationIncreasesBy10WhenTheirAnswerIsUpvoted() {
-//        //answer is upvoted by User voter
-//        // Another user upvotes the question
-//        User voter = board.createUser("Voter");
-//        //answer is upvoted by User voter
-//        voter.upVote(answerer);
-//
-//        // Verify the questioner's reputation increased by 5 points
-//        int expectedReputation = 10; // Each upvote gives 5 points
-//
-//        assertEquals(expectedReputation, questioner.getReputation());
-//    }
-//
-//    @Test
-//    public void answerAcceptedGives15PointReputationBoost() {
-//        questioner.acceptAnswer(answerer); //true
-//
-//        int expectedReputation = 15;
-//
-//        assertEquals(expectedReputation, questioner.getReputation());
-//    }
+        assertEquals(expectedReputation, answerer.getReputation());
+
+    }
 }
