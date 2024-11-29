@@ -1,6 +1,7 @@
 package com.teamtreehouse.techdegree.overboard.model;
 
 import com.teamtreehouse.techdegree.overboard.exc.AnswerAcceptanceException;
+import com.teamtreehouse.techdegree.overboard.exc.VotingException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +31,7 @@ public class UserTest {
      answer = answerer.answerQuestion(question, "Java is a programming language");
  }
 
+ //--------------------------------------------------------------------------
     @Test
     public void questionerReputationIncreasesBy5WhenQuestionUpVoted() {
         // Another user upvotes the question
@@ -66,5 +68,16 @@ public class UserTest {
 
         assertEquals(expectedReputation, answerer.getReputation());
 
+    }
+
+    //-------------------------------------------------------------------------------
+
+//voting up or down is not allowed on qs or answers by orig author
+    @Test (expected = VotingException.class)
+    public void userUpVotingTheirOwnQuestion() {
+     //since we have users and q/answer
+        //we can jump straight to grabbing the upVote
+        //q: yolis.upVote(Yolis ask q)
+        questioner.upVote(question);
     }
 }
