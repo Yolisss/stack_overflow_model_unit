@@ -80,4 +80,33 @@ public class UserTest {
         //q: yolis.upVote(Yolis ask q)
         questioner.upVote(question);
     }
+
+    @Test
+    public void differentUserCanUpVote() {
+        User differentUser = board.createUser("Alex");
+        int initialUpvotes = question.getUpVotes();
+        differentUser.upVote(question);
+        assertEquals(initialUpvotes + 1, question.getUpVotes());
+    }
+
+//    Attempt to have the user downvote their own question.
+
+    //QUESTION FOR TH: what do we do here?
+    @Test //(expected = VotingException.class)
+    public void userDownVoteTheirOwnQuestion() {
+        //questioner = yolis
+        //arg question = yolis.askQ(What is java);
+        questioner.downVote(question);
+    }
+
+    //    Attempt to have the user upvote their own answer.
+    @Test (expected = VotingException.class)
+    public void userUpVoteTheirOwnAnswer() {
+
+        //questioner = yolis
+        //arg question = yolis.askQ(What is java);
+        answerer.upVote(answer);
+    }
+    //    Attempt to have the user downvote their own answer.
+
 }
