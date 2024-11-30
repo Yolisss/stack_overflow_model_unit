@@ -3,7 +3,9 @@ package com.teamtreehouse.techdegree.overboard.model;
 import com.teamtreehouse.techdegree.overboard.exc.AnswerAcceptanceException;
 import com.teamtreehouse.techdegree.overboard.exc.VotingException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,17 +23,20 @@ public class UserTest {
     public Answer answer;
 
 
-    //initialize Objs (class) User
- @Before
-    public void setUp() throws Exception {
-     board = new Board("Coding");
-     questioner = board.createUser("Yolis");
-     answerer = board.createUser("Alex");
-     question = questioner.askQuestion("What is Java?");
-     answer = answerer.answerQuestion(question, "Java is a programming language");
- }
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
- //--------------------------------------------------------------------------
+        //initialize Objs (class) User
+     @Before
+        public void setUp() throws Exception {
+         board = new Board("Coding");
+         questioner = board.createUser("Yolis");
+         answerer = board.createUser("Alex");
+         question = questioner.askQuestion("What is Java?");
+         answer = answerer.answerQuestion(question, "Java is a programming language");
+     }
+
+ //-------------------------------Q 1 --------------------------------------
     @Test
     public void questionerReputationIncreasesBy5WhenQuestionUpVoted() {
         // Another user upvotes the question
@@ -70,7 +75,7 @@ public class UserTest {
 
     }
 
-    //-------------------------------------------------------------------------------
+    //--------------------------------End of Q1/ Start of Q2-----------------------------------------------
 
 //voting up or down is not allowed on qs or answers by orig author
     @Test (expected = VotingException.class)
@@ -92,6 +97,7 @@ public class UserTest {
 //    Attempt to have the user downvote their own question.
 
     //QUESTION FOR TH: what do we do here?
+    //method does not verify or give us an exception err
     @Test //(expected = VotingException.class)
     public void userDownVoteTheirOwnQuestion() {
         //questioner = yolis
@@ -107,6 +113,27 @@ public class UserTest {
         //arg question = yolis.askQ(What is java);
         answerer.upVote(answer);
     }
-    //    Attempt to have the user downvote their own answer.
 
+    //ANOTHER Q FOR TH
+    //METHOD DOES NOT PROVIDE EXCEPTION ERR
+    //    Attempt to have the user downvote their own answer.
+    @Test (expected = VotingException.class)
+    public void userDownVoteTheirOwnAnswer() {
+
+        //questioner = yolis
+        //arg question = yolis.askQ(What is java);
+        answerer.downVote(answer);
+    }
+
+    //--------------------End of Q2/Start of Q3 ----------------------------//
+
+    //Write a test to make sure that only the original questioner can accept an answer.
+    // Ensure the intended messaging is being sent back to the caller.
+    //
+    //Attempt to have a non-author user accept an answer to the question.
+
+    @Test(expected = AnswerAcceptanceException.class)
+    public void nonAuthorAcceptingAnAnswerToQuestion() throws Exception{
+        answerer.acceptAnswer(answer);
+    }
 }
