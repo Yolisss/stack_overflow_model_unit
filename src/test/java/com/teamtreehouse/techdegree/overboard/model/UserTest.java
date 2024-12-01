@@ -8,10 +8,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserTest {
-    //declare a field for shared use
-    //creating because all classes need access to this
     private Board board;
     //who is asking the q
     public User questioner;
@@ -43,7 +42,6 @@ public class UserTest {
         User voter = board.createUser("Voter");
         voter.upVote(question);
 
-        // Verify the questioner's reputation increased by 5 points
         int expectedReputation = 5; // Each upvote gives 5 points
 
         assertEquals(expectedReputation, questioner.getReputation());
@@ -52,8 +50,6 @@ public class UserTest {
     @Test
     public void answerersReputationIncreasesBy10WhenAnswerIsUpVoted() {
         User voter = board.createUser("Voter");
-     //answer is already answered
-        //someone needs to upvote answer
         voter.upVote(answer);
         //vote should increase answer by 10
         int expectedReputation = 10;
@@ -63,10 +59,6 @@ public class UserTest {
 
     @Test
     public void answerAcceptedGivesAnswer15PointReputation() throws Exception{
-     //we have answer, now we need to verify if it is accepted
-        //call acceptAnswer
-        //yolis.acceptAnswer(Answer = alex.AnswerQ("));
-        //
         questioner.acceptAnswer(answer);
 
         int expectedReputation = 15;
@@ -94,23 +86,16 @@ public class UserTest {
         assertEquals(initialUpvotes + 1, question.getUpVotes());
     }
 
-//    Attempt to have the user downvote their own question.
-
     //QUESTION FOR TH: what do we do here?
     //method does not verify or give us an exception err
     @Test //(expected = VotingException.class)
     public void userDownVoteTheirOwnQuestion() {
-        //questioner = yolis
-        //arg question = yolis.askQ(What is java);
         questioner.downVote(question);
     }
 
     //    Attempt to have the user upvote their own answer.
     @Test (expected = VotingException.class)
     public void userUpVoteTheirOwnAnswer() {
-
-        //questioner = yolis
-        //arg question = yolis.askQ(What is java);
         answerer.upVote(answer);
     }
 
@@ -119,21 +104,21 @@ public class UserTest {
     //    Attempt to have the user downvote their own answer.
     @Test (expected = VotingException.class)
     public void userDownVoteTheirOwnAnswer() {
-
-        //questioner = yolis
-        //arg question = yolis.askQ(What is java);
         answerer.downVote(answer);
     }
 
     //--------------------End of Q2/Start of Q3 ----------------------------//
 
-    //Write a test to make sure that only the original questioner can accept an answer.
-    // Ensure the intended messaging is being sent back to the caller.
-    //
-    //Attempt to have a non-author user accept an answer to the question.
 
-    @Test(expected = AnswerAcceptanceException.class)
-    public void nonAuthorAcceptingAnAnswerToQuestion() throws Exception{
+    @Test (expected = AnswerAcceptanceException.class)
+    public void nonAuthorAcceptingAnAnswerToQuestion(){
         answerer.acceptAnswer(answer);
+    }
+
+    @Test
+    public void originalQuestionerAcceptsAnAnswer() {
+        questioner.acceptAnswer(answer);
+
+        assertTrue(answer.isAccepted());
     }
 }
