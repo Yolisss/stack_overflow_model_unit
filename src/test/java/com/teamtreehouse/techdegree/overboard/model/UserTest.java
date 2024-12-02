@@ -86,7 +86,6 @@ public class UserTest {
         assertEquals(initialUpvotes + 1, question.getUpVotes());
     }
 
-    //QUESTION FOR TH: what do we do here?
     //method does not verify or give us an exception err
     @Test (expected = VotingException.class)
     public void userDownVoteTheirOwnQuestion() {
@@ -99,8 +98,6 @@ public class UserTest {
         answerer.upVote(answer);
     }
 
-    //ANOTHER Q FOR TH
-    //METHOD DOES NOT PROVIDE EXCEPTION ERR
     //    Attempt to have the user downvote their own answer.
     @Test (expected = VotingException.class)
     public void userDownVoteTheirOwnAnswer() {
