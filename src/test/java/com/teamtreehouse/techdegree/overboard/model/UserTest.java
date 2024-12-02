@@ -88,7 +88,7 @@ public class UserTest {
 
     //QUESTION FOR TH: what do we do here?
     //method does not verify or give us an exception err
-    @Test //(expected = VotingException.class)
+    @Test (expected = VotingException.class)
     public void userDownVoteTheirOwnQuestion() {
         questioner.downVote(question);
     }
